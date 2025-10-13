@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VEDAM eSports Club</title>
+<link rel="icon" type="image/png" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* MODIFIED: Added 'ValorantTFT' as the primary font-family */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'ValorantTFT', 'Orbitron', sans-serif;}
+body{background:#0f1923;color:white;overflow-x:hidden;transition:background 0.5s,color 0.5s;scroll-behavior:smooth;position:relative;}
+
+/* Background Video */
+#bg-video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-2;filter:brightness(0.4);}
+
+/* Navbar */
+.navbar{display:flex;justify-content:space-between;align-items:center;padding:15px 40px;background:rgba(0,0,0,0.6);backdrop-filter:blur(10px);position:fixed;top:0;width:100%;z-index:20;transition:background 0.5s;}
+.logo{height:40px;margin-right:10px;}
+.nav-left{display:flex;align-items:center;gap:10px;}
+.nav-right button{background:none;border:none;color:#ff4655;font-size:20px;cursor:pointer;margin-right:20px;position:relative;z-index:21;}
+.nav-right a{text-decoration:none;color:#fff;font-weight:bold;}
+
+/* Settings Menu */
+.menu{position:absolute;top:60px;right:40px;background:rgba(0,0,0,0.95);border:1px solid #ff4655;padding:15px;border-radius:8px;z-index:20;width:180px;transition:opacity 0.3s, transform 0.3s;opacity:0;pointer-events:none;transform:translateY(-20px);}
+.menu.show{opacity:1;pointer-events:auto;transform:translateY(0);}
+.menu label{display:block;margin:8px 0;cursor:pointer;}
+
+/* Hero Section */
+section{height:100vh;display:flex;justify-content:center;align-items:center;text-align:center;position:relative;padding:0 20px;}
+.hero-text h2{font-size:3em;margin-bottom:15px;color:#fff;text-shadow:0 0 20px #ff4655,0 0 10px #fff;}
+.hero-text span{color:#ff4655;}
+.hero-text p{font-size:1.2em;margin-bottom:25px;line-height:1.5;}
+
+/* Buttons */
+.btn{
+  display:inline-block;
+  padding:14px 28px;
+  margin:5px;
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:700;
+  color:#fff;
+  text-align:center;
+  transition:all 0.3s ease;
+  cursor:pointer;
+  font-size:1.1rem;
+  box-shadow:0 0 15px rgba(255,70,85,0.6);
+  letter-spacing:1px;
+}
+.join-btn{background:#000000;}
+.faq-btn{background:#000000;}
+.sign-btn{background:#ff7f50;}
+.btn:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 30px rgba(255,70,85,0.9);
+  filter:brightness(1.2);
+}
+.btn:active{
+  transform:scale(0.98);
+  box-shadow:0 0 15px rgba(255,70,85,0.6);
+}
+
+/* Intro/About scroll */
+.intro-container{max-width:800px;overflow:hidden;box-shadow:0 0 25px #ff4655;border-radius:12px;}
+.intro-container .about-scroll{max-height:300px;overflow-y:auto;text-align:left;line-height:1.6;padding:0 15px;}
+.intro-container .about-scroll::-webkit-scrollbar{width:6px;}
+.intro-container .about-scroll::-webkit-scrollbar-thumb{background:#ff4655;border-radius:3px;}
+
+/* Sign-in Box */
+.signin-container{
+  width:360px;
+  background:rgba(0,0,0,0.85);
+  padding:30px;
+  border-radius:12px;
+  text-align:center;
+  box-shadow:0 0 25px #ff4655;
+}
+.signin-container input{
+  width:100%;margin:10px 0;padding:12px;border:none;border-radius:5px;font-size:1rem;
+}
+.signin-container button{width:100%;padding:12px;background:#ff4655;color:white;border:none;border-radius:5px;cursor:pointer;font-size:1rem;margin-top:10px;}
+.signin-container button:hover{background:#ff5f6d;}
+
+/* Character Selection Box */
+.char-container{
+  width:520px;
+  background:rgba(0,0,0,0.85);
+  padding:30px;
+  border-radius:12px;
+  text-align:center;
+  box-shadow:0 0 25px #ff4655;
+}
+.char-container img{width:120px;margin:10px;cursor:pointer;border:2px solid transparent;border-radius:10px;transition:0.3s;}
+.char-container img:hover{transform:scale(1.1);border:2px solid #ff4655;}
+
+/* Cinematic */
+#cinematicText{font-size:2em;animation:fadeIn 1s forwards;text-align:center;}
+@keyframes fadeIn{from{opacity:0} to{opacity:1}}
+
+/* Hidden sections */
+.hidden-section{display:none;}
+@font-face {
+    font-family: 'ValorantTFT';
+    src: url('ValorantTFT.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-left">
+    <img src="logo.png" alt="VEDAM Logo" class="logo">
+    <h1>VEDAM eSports Club</h1>
+  </div>
+  <div class="nav-right">
+    <button id="settingsBtn">⚙️</button>
+    <span class="btn sign-btn" id="signBtn">Sign In</span>
+    <div id="menu" class="menu">
+      <label><input type="checkbox" id="musicToggle" checked> Music: On/Off</label>
+      <label><input type="checkbox" id="themeToggle"> Dark / Light Mode</label>
+    </div>
+  </div>
+</nav>
+
+<video autoplay muted loop id="bg-video">
+  <source src="background.mp4" type="video/mp4">
+</video>
+<audio id="bgMusic" src="music.mp3" loop></audio>
+
+<section id="heroPage">
+  <div class="hero-text">
+    <h2>Welcome to <span>VEDAM</span> eSports Club</h2>
+    <p>Where champions are forged and legends are born. Step into the arena, rise with your team, and make your mark.</p>
+    <span class="btn join-btn" id="joinBtn">Join Now</span>
+    <a href="faqs.html" class="btn faq-btn">FAQs</a>
+  </div>
+</section>
+
+<section id="introPage">
+  <div class="intro-container">
+    <h2>About VEDAM eSports Club</h2>
+    <div class="about-scroll">
+      <p>VEDAM eSports Club is where gamers meet, train, and compete. From tournaments to team-building events, we provide a platform for champions to rise. Join us and be part of the next generation of eSports legends!</p>
+      <p>Our mission is to develop talent, provide a competitive yet fun environment, and foster a community where gamers can connect and grow. With regular tournaments, workshops, and streaming events, every member has the opportunity to shine.</p>
+    </div>
+    <span class="btn join-btn" id="proceedToSign">Proceed to Sign In</span>
+  </div>
+</section>
+
+<section id="signinPage" class="hidden-section">
+  <div class="signin-container">
+    <h2>Sign In</h2>
+    <form id="signinForm">
+      <input type="text" placeholder="Username" required>
+      <input type="password" placeholder="Password" required>
+      <button type="submit">Sign In</button>
+    </form>
+    <p style="margin-top:10px;"><span class="btn" id="backHome1">← Back</span></p>
+  </div>
+</section>
+
+<section id="charSelect" class="hidden-section">
+  <div class="char-container">
+    <h2>Select Your Character</h2>
+    <img src="char1.png" alt="Character 1" data-name="Assassin">
+    <img src="char2.png" alt="Character 2" data-name="Sniper">
+    <img src="char3.png" alt="Character 3" data-name="Brawler">
+    <p style="margin-top:15px;"><span class="btn" id="backHome2">← Back</span></p>
+  </div>
+</section>
+
+<section id="cinematicPage" class="hidden-section">
+  <div class="char-container">
+    <h2 id="cinematicText"></h2>
+  </div>
+</section>
+
+<script>
+const settingsBtn=document.getElementById("settingsBtn");
+const menu=document.getElementById("menu");
+settingsBtn.addEventListener("click",()=>menu.classList.toggle("show"));
+
+const musicToggle=document.getElementById("musicToggle");
+const bgMusic=document.getElementById("bgMusic");
+window.addEventListener('click',()=>{bgMusic.play();}, {once:true});
+musicToggle.addEventListener("change",()=>{musicToggle.checked?bgMusic.play():bgMusic.pause();});
+
+const themeToggle=document.getElementById("themeToggle");
+themeToggle.addEventListener("change",()=>document.body.classList.toggle("light"));
+
+const joinBtn=document.getElementById("joinBtn");
+const signBtn=document.getElementById("signBtn");
+const proceedToSign=document.getElementById("proceedToSign");
+const signinPage=document.getElementById("signinPage");
+const charSelect=document.getElementById("charSelect");
+const cinematicPage=document.getElementById("cinematicPage");
+const backHome1=document.getElementById("backHome1");
+const backHome2=document.getElementById("backHome2");
+const introPage=document.getElementById("introPage");
+const heroPage=document.getElementById("heroPage");
+
+joinBtn.addEventListener("click",()=>{ introPage.scrollIntoView({behavior:'smooth'}); });
+proceedToSign.addEventListener("click",()=>{ signinPage.style.display="flex"; signinPage.scrollIntoView({behavior:'smooth'}); });
+signBtn.addEventListener("click",()=>{ signinPage.style.display="flex"; signinPage.scrollIntoView({behavior:'smooth'}); });
+backHome1.addEventListener("click",()=>{ signinPage.style.display="none"; heroPage.scrollIntoView({behavior:'smooth'}); });
+backHome2.addEventListener("click",()=>{ charSelect.style.display="none"; signinPage.style.display="flex"; signinPage.scrollIntoView({behavior:'smooth'}); });
+
+// Sign-in form → character selection
+document.getElementById("signinForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  signinPage.style.display="none";
+  charSelect.style.display="flex";
+  charSelect.scrollIntoView({behavior:'smooth'});
+});
+
+// Character selection → cinematic
+charSelect.querySelectorAll("img").forEach(img=>{
+  img.addEventListener("click",()=>{
+    const name=img.getAttribute("data-name");
+    charSelect.style.display="none";
+    cinematicPage.style.display="flex";
+    const texts=[`Entering the World, ${name}...`,'Get Ready for Action!','Team VEDAM Awaits You!'];
+    let i=0;
+    const cinematicText=document.getElementById("cinematicText");
+    function showNextText(){
+      if(i<texts.length){
+        cinematicText.innerText=texts[i];
+        cinematicText.style.opacity=0;
+        cinematicText.style.transition='opacity 1s';
+        setTimeout(()=> cinematicText.style.opacity=1,100);
+        i++;
+        setTimeout(showNextText,2500);
+      } else {
+        cinematicPage.style.display="none";
+        alert('Ready for next stage!');
+      }
+    }
+    showNextText();
+  });
+});
+</script>
+</body>
+</html>

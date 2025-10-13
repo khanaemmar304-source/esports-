@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E-Sports Club | FAQ Section</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* ==== BASE STYLES ==== */
+body {
+  background-color: #0a0014;
+  color: #fff;
+  font-family: "Orbitron", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  text-align: center;
+  font-size: 2rem;
+  color: #ff2ec8;
+  margin: 3rem 0 2rem;
+  letter-spacing: 2px;
+}
+
+/* ==== FAQ CONTAINER ==== */
+.faq-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* ==== FAQ ITEM ==== */
+.faq-item {
+  background: linear-gradient(145deg, #190033, #0a0014);
+  border: 2px solid #ff2ec8;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+  box-shadow: 0 0 20px #ff2ec855;
+}
+
+/* Decorative bars */
+.faq-item::before,
+.faq-item::after {
+  content: "";
+  position: absolute;
+  width: 50px;
+  height: 6px;
+  background: #ff2ec8;
+}
+.faq-item::before {
+  top: 0;
+  left: 0;
+  transform: skewX(-40deg);
+}
+.faq-item::after {
+  bottom: 0;
+  right: 0;
+  transform: skewX(-40deg);
+}
+
+/* ==== QUESTION ==== */
+.faq-question {
+  display: block;
+  padding: 1.2rem 2.5rem 1.2rem 1.5rem;
+  font-size: 1.1rem;
+  color: #fff;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s;
+}
+
+.faq-question::after {
+  content: "▼";
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ff2ec8;
+  transition: transform 0.3s ease;
+}
+
+/* ==== HIDE RADIO ==== */
+input[type="radio"] {
+  display: none;
+}
+
+/* ==== ANSWER ==== */
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  padding: 0 1.5rem;
+  color: #ccc;
+  font-size: 0.95rem;
+  background: rgba(255, 46, 200, 0.05);
+}
+
+/* ==== WHEN OPEN ==== */
+input[type="radio"]:checked + label .faq-question::after {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+input[type="radio"]:checked + label + .faq-answer {
+  max-height: 150px;
+  padding: 1rem 1.5rem 1.5rem;
+}
+
+/* ==== RESPONSIVE ==== */
+@media (max-width: 768px) {
+  .faq-question {
+    font-size: 1rem;
+  }
+  .faq-answer {
+    font-size: 0.9rem;
+  }
+}
+</style>
+</head>
+
+<body>
+  <h2>FREQUENT QUESTIONS</h2>
+
+  <div class="faq-container">
+    <div class="faq-item">
+      <input type="radio" name="faq" id="faq1" checked>
+      <label for="faq1">
+        <div class="faq-question">What is WEC?</div>
+      </label>
+      <div class="faq-answer">
+        <p>The World Esports Championship (WEC) is a global tournament organized for professional and amateur gamers worldwide.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <input type="radio" name="faq" id="faq2">
+      <label for="faq2">
+        <div class="faq-question">Which game titles are available on WEC?</div>
+      </label>
+      <div class="faq-answer">
+        <p>Popular esports titles including Dota 2, CS:GO, PUBG Mobile, and eFootball are featured each season.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <input type="radio" name="faq" id="faq3">
+      <label for="faq3">
+        <div class="faq-question">Can Esports be considered as a profession?</div>
+      </label>
+      <div class="faq-answer">
+        <p>Yes! With global sponsorships, leagues, and tournaments, esports is now a recognized professional career.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <input type="radio" name="faq" id="faq4">
+      <label for="faq4">
+        <div class="faq-question">Who can become a member?</div>
+      </label>
+      <div class="faq-answer">
+        <p>Anyone passionate about gaming can join — whether you are a player, streamer, or enthusiast.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <input type="radio" name="faq" id="faq5">
+      <label for="faq5">
+        <div class="faq-question">Where can I follow the tournament schedule and results?</div>
+      </label>
+      <div class="faq-answer">
+        <p>All schedules and match results are updated regularly on our official website and Discord channels.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <input type="radio" name="faq" id="faq6">
+      <label for="faq6">
+        <div class="faq-question">Where can I watch the games?</div>
+      </label>
+      <div class="faq-answer">
+        <p>Games are streamed live on Twitch, YouTube, and our dedicated eSports portal.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <input type="radio" name="faq" id="faq7">
+      <label for="faq7">
+        <div class="faq-question">How can I participate in the World Esports Championship?</div>
+      </label>
+      <div class="faq-answer">
+        <p>Register through your national federation or directly via the IESF online registration portal.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <input type="radio" name="faq" id="faq8">
+      <label for="faq8">
+        <div class="faq-question">Where can I report an issue?</div>
+      </label>
+      <div class="faq-answer">
+        <p>Submit a support ticket through our website’s contact page or reach us directly via email.</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
